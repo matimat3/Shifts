@@ -5,58 +5,58 @@ from random import randint
 class Employee:
     favShiftCounter = 0
 
-    def __init__(self, name, favouriteShift, lastShift):
+    def __init__(self, name, favouriteShift, lastShift, weight):
         self.name = name
         self.favouriteShift = favouriteShift
         self.lastShift = lastShift
+        self.weight = weight
 
 
 # 60/100 fav shift, 20/100 each other
 # if fav shift not got: 80/100 fav shift, 10/100 each other
 
-Employee1 = Employee("Leon", 0, 1)
-Employee2 = Employee("Biki", 0, 2)
+Employee1 = Employee("Employee 1", "Early Shift", "Late Shift", 0)
+Employee2 = Employee("Employee 2", "Middle Shift", "Late Shift", 0)
 
-print(Employee1.name)
-print(Employee1.favouriteShift)
-print(Employee1.lastShift)
 
 employeesArray = [Employee1, Employee2]
 
-print(employeesArray)
 
 earlyShiftNeeded = 3
 midShiftNeeded = 4
 lateShiftNeeded = 5
 
-shiftEarly = [0]
-shiftMid = [0]
-shiftLate = [0]
+shiftEarlyArray = [0]
+shiftMidArray = [0]
+shiftLateArray = [0]
 
 notAssigned = [0]
 
-shiftEarly.pop(0)
-shiftMid.pop(0)
-shiftLate.pop(0)
+shiftEarlyArray.pop(0)
+shiftMidArray.pop(0)
+shiftLateArray.pop(0)
 notAssigned.pop(0)
 
 
 def shiftMaker():
     random.shuffle(employeesArray)
     for x in employeesArray:
-        if x.favouriteShift == 0:
-            randomNum = randint(0, 100)
-            print(randomNum)
-            if randomNum <= 60:
-                print("EARLY SHIFT")
-                print(randomNum)
-            elif randomNum > 60 & randomNum <= 80:
-                print("MID SHIFT")
+        randomNum = randint(0, 100)
+        print(randomNum)
+        if randomNum <= x.weight:
+            x.lastShift = "Early Shift"
+        elif randomNum > x.weight & randomNum <= x.weight + 20:
+            x.lastShift = "Middle Shift"
+        elif randomNum > x.weight + 20:
+            x.lastShift = "Late Shift"
+        if x.lastShift == x.favouriteShift:
+            print("Favourite shift obtained")
+            x.weight = 60
+        elif x.lastShift != x.favouriteShift:
+            x.weight += 20
 
         print("fav shift: ")
         print(x.favouriteShift)
-    else:
-        print("not fav shift")
 
 
 # def differentShift(): # if someone is in a given shift, he can't be assigned to another one
